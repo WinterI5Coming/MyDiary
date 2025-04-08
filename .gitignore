@@ -1,0 +1,26 @@
+# Java class files
+*.class
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse/STS
+.project
+.classpath
+.settings/
+.apt_generated/
+.factorypath
+.springBeans
+.metadata/
+bin/
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Git
+*.orig
