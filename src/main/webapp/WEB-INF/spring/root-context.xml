@@ -26,7 +26,7 @@
 	<!-- value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"> -->
 	<!-- </property> -->
 	<!-- </bean> -->
-	
+
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 		autowire-candidate="default">
@@ -56,4 +56,11 @@
 		class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"></constructor-arg>
 	</bean>
+
+	<context:component-scan
+		base-package="com.legacydiary.service" />
+	<context:component-scan
+		base-package="com.legacydiary.persistence" />
+
+
 </beans>

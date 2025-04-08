@@ -7,5 +7,7 @@
 		select now()
 	</select>
 
-	
+	<select id="selectMemberId" resultType="int">
+		select count(*) from member where memberId = #{tmpMemberId}
+	</select>
 </mapper>

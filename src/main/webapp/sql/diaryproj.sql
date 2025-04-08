@@ -5,3 +5,6 @@ CREATE TABLE `ysu`.`member` (
   `memberName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`memberId`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+
+-- 아이디 중복 검사
+select * from member where memberId = ?
