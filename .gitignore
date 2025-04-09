@@ -22,5 +22,6 @@ bin/
 .DS_Store
 Thumbs.db
 
+config.properties
 # Git
 *.orig

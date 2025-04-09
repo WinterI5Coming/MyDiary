@@ -61,6 +61,8 @@
 		base-package="com.legacydiary.service" />
 	<context:component-scan
 		base-package="com.legacydiary.persistence" />
+	<context:component-scan
+		base-package="com.legacydiary.util"></context:component-scan>
 
 
 </beans>

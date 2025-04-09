@@ -8,6 +8,13 @@
 	</select>
 
 	<select id="selectMemberId" resultType="int">
-		select count(*) from member where memberId = #{tmpMemberId}
+		select count(*) from
+		member where memberId = #{tmpMemberId}
 	</select>
+
+	<insert id="insertMember">
+		insert into member(memberId, memberPwd, email,
+		memberName) values(#{memberId}, sha1(md5(#{memberPwd})), #{email},
+		#{memberName})
+	</insert>
 </mapper>
