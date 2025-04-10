@@ -24,4 +24,5 @@ Thumbs.db
 
 config.properties
 # Git
-*.origtarget/
+*.orig
+target/
