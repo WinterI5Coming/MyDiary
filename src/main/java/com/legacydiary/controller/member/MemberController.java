@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionIdListener;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -109,6 +110,19 @@ public class MemberController {
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
+	@PostMapping("/clearAuthCode")
+	public ResponseEntity<String> clearAuthCode(HttpSession session) {
+		
+		if (session.getAttribute("authCode") != null) {
+			// 세션에 저장된 인증코드 삭제
+			session.removeAttribute("authCode");
+		}
+		
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+		
+	}
+
+	
 	@PostMapping("/signup")
 	public String registerMember(MemberDTO registerMember, RedirectAttributes rttr) {
 		
@@ -128,5 +142,6 @@ public class MemberController {
 		
 		return result;
 	}
-
+	
+	
 }

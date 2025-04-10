@@ -34,15 +34,16 @@ public class SendMailService {
 
 		Properties props = new Properties();
 
-		//
+		// naver smtp
 		props.put("mail.smtp.host", "smtp.naver.com");
 		props.put("mail.smtp.port", "587");
-		props.put("mail.transport.protocol", "smtp");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.starttls.trust", "smtp.naver.com");
 		props.put("mail.smtp.ssl.trust", "smtp.naver.com");
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.required", "true");
 		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+		
+		// gmail smtp
+		
 
 		getAccount();
 
