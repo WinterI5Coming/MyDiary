@@ -41,9 +41,8 @@ public class SendMailService {
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.required", "true");
 		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
-		
+
 		// gmail smtp
-		
 
 		getAccount();
 
@@ -66,7 +65,13 @@ public class SendMailService {
 			mime.addRecipient(RecipientType.TO, new InternetAddress(emailAddr)); // 받는 사람의 메일 주소
 
 			mime.setSubject(subject); // 메일 제목
-			mime.setText(message); // 메일 본문
+//			mime.setText(message); // 메일 본문
+			String html = "<h1>회원가입을 환영합니다</h1>";
+			html += "<h1>인증번호를 입력하시고 회원가입을 완료하세요</h1>";
+			html += "<h1>인증 코드 : </h1>";
+			html += "<h3>" + activationCode + "</h3>";
+			mime.setText(html, "utf-8", html);
+			
 
 			Transport.send(mime);
 		}
