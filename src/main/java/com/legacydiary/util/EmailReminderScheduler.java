@@ -1,41 +1,37 @@
-package com.legacydiary.mapper;
+package com.legacydiary.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import com.legacydiary.domain.DiaryVO;
+import com.legacydiary.mapper.DiaryMapper;
 import com.legacydiary.persistence.MemberDAO;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "file:src/main/webapp/WEB-INF/spring/**/root-context.xml" })
+@Component
+@RequiredArgsConstructor
 @Slf4j
-public class DIaryMapperTest {
+public class EmailReminderScheduler {
 
-	@Autowired
-	private DiaryMapper diaryMapper;
+	private final DiaryMapper diaryMapper;
+	private final MemberDAO memberDAO;
+	private final SendMailService sendMailService;
 
-	@Autowired
-	private MemberDAO memberDAO;
-
-//	@Test
-//	public void selectNowTest() {
-//		
-//		log.info(diaryMapper.selectNow());
-//		
-//	}
-
-	@Test
-	public void selectDiaryDueTomorrowTest() {
+//	@Scheduled(cron = "0 0/1 * * * *")
+	@Scheduled(cron = "0 58 17 * * *")
+	public void reminderSchedule() throws AddressException, FileNotFoundException, MessagingException, IOException {
 		List<DiaryVO> list = diaryMapper.selectDiaryDueTomorrow();
 		log.info("list : {}", list);
 
@@ -60,17 +56,18 @@ public class DIaryMapperTest {
 
 			// 메일 본문
 			StringBuilder sb = new StringBuilder();
-			
+
 			sb.append("안녕하세요. 내일까지 해야할 일이 있어요.");
-			
-			for ( DiaryVO vo : entry.getValue()) {
+
+			for (DiaryVO vo : entry.getValue()) {
 				sb.append("---").append(vo.getTitle());
 			}
-			
+
 			sb.append(memberId + "님, 꼭 완료하세요.");
-			
+
 			log.info(sb.toString());
+
+			sendMailService.sendReminder(email, sb.toString());
 		}
 	}
-
 }

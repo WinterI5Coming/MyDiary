@@ -8,22 +8,34 @@
 	</select>
 
 	<insert id="insert">
-		insert into diary (title, dueDate, writer) values(#{title}, #{dueDate}, #{writer})
+		insert into diary (title, dueDate, writer)
+		values(#{title}, #{dueDate}, #{writer})
 	</insert>
 
 	<select id="selectAllList" resultType="MemberVO">
-		select * from diary order by dno desc
+		select * from diary order
+		by dno desc
 	</select>
-	
+
 	<update id="updateFinished">
-		update diary set finished = #{finished} where dno = #{dno}
+		update diary set finished = #{finished} where dno =
+		#{dno}
 	</update>
-	
+
 	<update id="updateDiary">
-		update diary set title = #{title}, dueDate = #{dueDate} where dno = #{dno}
+		update diary set title = #{title}, dueDate =
+		#{dueDate} where dno = #{dno}
 	</update>
-	
+
 	<select id="selectAllListById" resultType="MemberVO">
-		select * from diary where writer = #{memberId} order by dno desc
+		select * from diary
+		where writer = #{memberId} order by dno desc
 	</select>
+
+	<select id="selectDiaryDueTomorrow" resultType="MemberVO">
+		select * from
+		diary where dueDate = date_add(curdate(), interval 1 day)
+	</select>
+
+
 </mapper>

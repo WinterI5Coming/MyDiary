@@ -13,4 +13,7 @@ public interface MemberDAO {
 
 	// 로그인
 	MemberDTO login(LoginDTO loginDTO);
+	
+	// memberId로 이메일 조회
+	String selectEmailByMemberId(String memberId);
 }

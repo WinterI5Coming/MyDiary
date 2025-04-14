@@ -19,5 +19,7 @@ public interface DiaryMapper {
 	int updateDiary(DiaryVO diaryVO);
 
 	List<DiaryVO> selectAllListById(String memberId);
+	
+	List<DiaryVO> selectDiaryDueTomorrow();
 
 }
