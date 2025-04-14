@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class DiaryServiceImpl implements DiaryService {
-	
+
 	private final DiaryMapper diaryMapper;
 
 	@Override
@@ -28,6 +28,16 @@ public class DiaryServiceImpl implements DiaryService {
 	@Override
 	public void updateFinished(int dno, boolean finished) {
 		diaryMapper.updateFinished(dno, finished);
+	}
+
+	@Override
+	public void modify(DiaryVO diaryVO) {
+		diaryMapper.updateDiary(diaryVO);
+	}
+
+	@Override
+	public List<DiaryVO> viewAll(String memberId) {
+		return diaryMapper.selectAllListById(memberId);
 	}
 
 }

@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.legacydiary.domain.LoginDTO;
 import com.legacydiary.domain.MemberDTO;
 
 @Repository
@@ -24,6 +25,11 @@ public class MemberDAOImple implements MemberDAO {
 	public int insertMember(MemberDTO registerMember) {
 		
 		return ses.insert(ns + "insertMember", registerMember);
+	}
+
+	@Override
+	public MemberDTO login(LoginDTO loginDTO) {
+		return ses.selectOne(ns + "loginWithLoginDTO", loginDTO);
 	}
 
 }

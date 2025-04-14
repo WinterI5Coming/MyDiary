@@ -2,6 +2,7 @@ package com.legacydiary.service.member;
 
 import org.springframework.stereotype.Service;
 
+import com.legacydiary.domain.LoginDTO;
 import com.legacydiary.domain.MemberDTO;
 import com.legacydiary.persistence.MemberDAO;
 
@@ -37,4 +38,10 @@ public class MemberServiceImpl implements MemberService {
 		return false;
 	}
 
+	@Override
+	public MemberDTO login(LoginDTO loginDTO) {
+		return dao.login(loginDTO);
+	}
+
+	
 }

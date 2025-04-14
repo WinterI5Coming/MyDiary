@@ -17,4 +17,8 @@
 		memberName) values(#{memberId}, sha1(md5(#{memberPwd})), #{email},
 		#{memberName})
 	</insert>
+	
+	<select id="loginWithLoginDTO" resultType="MemberDTO">
+		select * from member where memberId = #{memberId} and memberPwd = sha1(md5(#{memberPwd}))
+	</select>
 </mapper>
