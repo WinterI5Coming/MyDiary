@@ -5,8 +5,10 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
@@ -14,31 +16,31 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 
-	<!-- <bean id="dataSource" -->
-	<!-- class="org.springframework.jdbc.datasource.DriverManagerDataSource" -->
-	<!-- autowire-candidate="default"> -->
-	<!-- <property name="url" -->
-	<!-- value="jdbc:log4jdbc:mysql://localhost:3306/ysu?serverTimezone=UTC"> -->
-	<!-- </property> -->
-	<!-- <property name="username" value="root"></property> -->
-	<!-- <property name="password" value="1234"></property> -->
-	<!-- <property name="driverClassName" -->
-	<!-- value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"> -->
-	<!-- </property> -->
-	<!-- </bean> -->
-
 	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-		autowire-candidate="default">
-		<property name="url"
-			value="jdbc:log4jdbc:mysql://localhost:3306/ysu?serverTimezone=UTC">
-		</property>
-		<property name="username" value="root"></property>
-		<property name="password" value="1234"></property>
-		<property name="driverClassName"
-			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy">
-		</property>
+	class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+	autowire-candidate="default">
+	<property name="url"
+	value="jdbc:log4jdbc:mysql://localhost:3306/ysu?serverTimezone=UTC">
+	</property>
+	<property name="username" value="root"></property>
+	<property name="password" value="1234"></property>
+	<property name="driverClassName"
+	value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy">
+	</property>
 	</bean>
+
+<!-- 	<bean id="dataSource" -->
+<!-- 		class="org.springframework.jdbc.datasource.DriverManagerDataSource" -->
+<!-- 		autowire-candidate="default"> -->
+<!-- 		<property name="url" -->
+<!-- 			value="jdbc:log4jdbc:mysql://localhost:3306/ysu?serverTimezone=UTC"> -->
+<!-- 		</property> -->
+<!-- 		<property name="username" value="root"></property> -->
+<!-- 		<property name="password" value="1234"></property> -->
+<!-- 		<property name="driverClassName" -->
+<!-- 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
 
 
 	<bean id="sqlSessionFactory"
@@ -60,6 +62,9 @@
 	<!-- 매퍼 인터페이스 설정 -->
 	<mybatis-spring:scan
 		base-package="com.legacydiary.mapper" />
+
+	<!-- 작업스케줄러를 annotation방식으로 처리하는 설정 -->
+	<task:annotation-driven/>
 
 	<context:component-scan
 		base-package="com.legacydiary.service" />

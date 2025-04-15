@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionIdListener;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.legacydiary.domain.LoginDTO;
 import com.legacydiary.domain.MemberDTO;
 import com.legacydiary.domain.MyResponse;
 import com.legacydiary.service.member.MemberService;
@@ -90,58 +90,96 @@ public class MemberController {
 
 	@PostMapping("/checkAuthCode")
 	public ResponseEntity<String> checkAuthCode(@RequestParam String memberAuthCode, HttpSession session) {
-		
+
 		// 유저가 보낸 AuthCode와 우리가 보낸 AuthCode가 일치하는지 확인
 		log.info("memberAuthCode : {}", memberAuthCode);
 		log.info("session에 저장된 코드 : {}", session.getAttribute("authCode"));
-		
+
 		String result = "";
-		
-		if (session.getAttribute("authCode") != null ) {
+
+		if (session.getAttribute("authCode") != null) {
 			String sesAuthCode = (String) session.getAttribute("authCode");
-			
+
 			if (memberAuthCode.equals(sesAuthCode)) {
 				result = "success";
 			} else {
 				result = "fail";
 			}
 		}
-		
+
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/clearAuthCode")
 	public ResponseEntity<String> clearAuthCode(HttpSession session) {
-		
+
 		if (session.getAttribute("authCode") != null) {
 			// 세션에 저장된 인증코드 삭제
 			session.removeAttribute("authCode");
 		}
-		
+
 		return new ResponseEntity<String>("success", HttpStatus.OK);
-		
+
 	}
 
-	
 	@PostMapping("/signup")
 	public String registerMember(MemberDTO registerMember, RedirectAttributes rttr) {
-		
-		
+
 		log.info("registerMember : {}", registerMember);
-		
+
 		String result = "";
 		if (mService.saveMember(registerMember)) {
 			// 가입 완료 후 index.jsp로..
 			rttr.addFlashAttribute("status", "success");
-			result = "redirect:/"; 
+			result = "redirect:/";
 		} else {
 			// 가입 실패
 			rttr.addAttribute("status", "fail");
 			result = "redirect:/member/signup";
 		}
-		
+
 		return result;
 	}
-	
-	
+
+	@GetMapping("/login")
+	public String loginForm() {
+
+		return "/member/login";
+	}
+
+	@PostMapping("/login")
+	public String loginPost(LoginDTO loginDTO, HttpSession session) {
+		log.info("로그인 하러가자 {}", loginDTO);
+		String resultPage = "";
+
+		MemberDTO loginMember = mService.login(loginDTO);
+		log.info("loginMember : {}", loginMember);
+
+		if (loginMember != null) {
+			// 로그인 성공 -> 메인 페이지("/")
+			session.setAttribute("loginMember", loginMember); // 세션에 로그인한 멤버의 정보를 저장
+			resultPage = "redirect:/";
+		} else {
+			// 로그인 실패 -> 로그인 페이지("/member/login")
+			resultPage = "redirect:/member/login";
+		}
+
+		return resultPage;
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+
+		if (session.getAttribute("loginMember") != null) {
+			// 세션에 저장된 값들 삭제
+			session.removeAttribute("loginMember");
+
+			// 세션 무효화
+			session.invalidate();
+		}
+		
+		return "redirect:/";
+
+	}
+
 }

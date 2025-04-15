@@ -13,10 +13,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class User {
+public class SearchDTO {
+
+	private String writer;
+	private String searchTypes;
+	private String searchWord;
+	private String finished;
+	private String from;
+	private String to;
 	
-	private int id;
-	private String username;
-	private String email;
-	private String state;
+	
+	
 }

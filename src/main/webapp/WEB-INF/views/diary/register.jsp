@@ -36,11 +36,12 @@
 				</div>
 
 				<div class="mb-3 mt-3">
-					<label for="writer" class="form-label">Writer:</label><span
-						id="writerError"
-					></span> <input
-						type="text" class="form-control" id="writer" placeholder="작성자"
-						name="writer"
+					<!-- 					<label for="writer" class="form-label">Writer:</label><span -->
+					<!-- 						id="writerError" -->
+					<!-- 					></span> -->
+					<input
+						type="hidden" class="form-control" id="writer" placeholder="작성자"
+						name="writer" value="${loginMember.memberId }"
 					>
 				</div>
 

@@ -11,12 +11,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Builder
-public class User {
+@ToString
+public class LoginDTO {
 	
-	private int id;
-	private String username;
-	private String email;
-	private String state;
+	private String memberId;
+	private String memberPwd;
+	
+
 }
