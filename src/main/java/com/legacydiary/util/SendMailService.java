@@ -70,7 +70,7 @@ public class SendMailService {
 			html += "<h1>인증번호를 입력하시고 회원가입을 완료하세요</h1>";
 			html += "<h1>인증 코드 : </h1>";
 			html += "<h3>" + activationCode + "</h3>";
-			mime.setText(html, "utf-8", html);
+			mime.setText(html, "utf-8", "html");
 
 			Transport.send(mime);
 		}
@@ -96,9 +96,11 @@ public class SendMailService {
 		props.put("mail.smtp.host", "smtp.naver.com");
 		props.put("mail.smtp.port", "587");
 		props.put("mail.smtp.starttls.required", "true");
-//		      props.put("mail.smtp.ssl.trust", "smtp.naver.com");
+		props.put("mail.smtp.ssl.trust", "smtp.naver.com"); // 이거 추가하니까 되네
 		props.put("mail.smtp.ssl.protocols", "TLSv1.2");
 		props.put("mail.smtp.auth", "true");
+		
+		
 
 		// 세션 생성
 		Session mailSession = Session.getInstance(props, new Authenticator() {

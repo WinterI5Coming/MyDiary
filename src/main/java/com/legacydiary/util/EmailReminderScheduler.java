@@ -30,7 +30,7 @@ public class EmailReminderScheduler {
 	private final SendMailService sendMailService;
 
 //	@Scheduled(cron = "0 0/1 * * * *")
-	@Scheduled(cron = "0 58 17 * * *")
+	@Scheduled(cron = "0 39 9 * * *")
 	public void reminderSchedule() throws AddressException, FileNotFoundException, MessagingException, IOException {
 		List<DiaryVO> list = diaryMapper.selectDiaryDueTomorrow();
 		log.info("list : {}", list);
