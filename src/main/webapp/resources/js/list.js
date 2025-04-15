@@ -49,6 +49,10 @@ $(function () {
   $(".closeModal").click(function () {
     $("#modifyModal").hide();
   });
+
+  $("#searchBtn").click(function () {
+    $("#searchFormCard").toggle();
+  });
 });
 
 function modifyDiary() {

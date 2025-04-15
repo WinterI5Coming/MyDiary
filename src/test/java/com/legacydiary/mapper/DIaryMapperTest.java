@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.legacydiary.domain.DiaryVO;
+import com.legacydiary.domain.SearchDTO;
 import com.legacydiary.persistence.MemberDAO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -60,16 +61,29 @@ public class DIaryMapperTest {
 
 			// 메일 본문
 			StringBuilder sb = new StringBuilder();
-			
+
 			sb.append("안녕하세요. 내일까지 해야할 일이 있어요.");
-			
-			for ( DiaryVO vo : entry.getValue()) {
+
+			for (DiaryVO vo : entry.getValue()) {
 				sb.append("---").append(vo.getTitle());
 			}
-			
+
 			sb.append(memberId + "님, 꼭 완료하세요.");
-			
+
 			log.info(sb.toString());
+		}
+	}
+
+	@Test
+	public void testSearch() {
+		SearchDTO searchDTO = SearchDTO.builder().writer("홍길동").searchTypes("title").searchWord("글")
+//				.finished("false")
+				.from("2025-04-01").to("2025-04-30").build();
+		
+		List<DiaryVO> result = diaryMapper.selectSearchList(searchDTO);
+		
+		for (DiaryVO diary : result) {
+			log.info("diary: {}", diary);
 		}
 	}
 

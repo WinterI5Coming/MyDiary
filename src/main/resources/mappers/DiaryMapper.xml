@@ -37,5 +37,39 @@
 		diary where dueDate = date_add(curdate(), interval 1 day)
 	</select>
 
+	<!-- 검색 -->
+	<sql id="search">
+		<where>
+			<if test="writer != null and writer != ''">
+				writer = #{writer}
+			</if>
+
+			<if
+				test="searchTypes != null and searchTypes == 'title' and searchWord != null and searchWord != ''">
+				<trim prefix="AND">
+					title like concat('%', #{searchWord}, '%')
+				</trim>
+			</if>
+
+			<if test="finished != null and finished != ''">
+				<trim prefix="AND">
+					finished = #{finished}	
+				</trim>
+			</if>
+			
+			<if test="from != null and from != '' and to != null and to != ''">
+				<trim prefix="AND">
+					dueDate between #{from} and #{to}
+				</trim>
+			</if>
+		</where>
+	</sql>
+	<select id="selectSearchList" resultType="MemberVO">
+		select * from diary
+		<include refid="search">
+
+		</include>
+		order by dno desc
+	</select>
 
 </mapper>
